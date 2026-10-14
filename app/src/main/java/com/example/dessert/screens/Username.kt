@@ -15,6 +15,9 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
@@ -26,11 +29,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.dessert.GameViewModel
 import com.example.dessert.R
 
 @Preview(showBackground = true)
 @Composable
-fun UsernamePage(value: String = "", onValueChange: (String) -> Unit = {}, onClick: () -> Unit = {}) {
+fun UsernamePage(onClick: () -> Unit = {}, viewModel: GameViewModel = viewModel()) {
+    val inputText = rememberSaveable { mutableStateOf("") }
     Column(
         modifier = Modifier.fillMaxSize().padding(vertical = 60.dp),
         verticalArrangement = Arrangement.SpaceBetween,
@@ -44,13 +50,15 @@ fun UsernamePage(value: String = "", onValueChange: (String) -> Unit = {}, onCli
             fontWeight = FontWeight(700)
         )
         OutlinedTextField(
-            value = value,
-            onValueChange = { onValueChange(it) },
+            value = inputText.value,
+            onValueChange = { inputText.value = it },
             placeholder = { Text("Input your name") },
             singleLine = true
         )
         Button(
-            onClick = { onClick() },
+            onClick = { onClick()
+                viewModel.setPlayerName(inputText.value)
+            },
         ) {
             Text(
                 text = "Start",

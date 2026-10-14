@@ -9,8 +9,8 @@ enum class ItemType(
     val points: Int,
     val extraSeconds: Int = 0,
     val hpLoss: Int = 0,
-    @DrawableRes image: Int = R.drawable.baguette,
-    @DrawableRes boxImage: Int = R.drawable.baguette_box
+    @DrawableRes val image: Int = R.drawable.baguette,
+    @DrawableRes val boxImage: Int = R.drawable.baguette_box
 ) {
     BAGUETTE(points = 10),
     MACARON(points = 20, image = R.drawable.macaron, boxImage = R.drawable.macaron_box),
@@ -19,15 +19,21 @@ enum class ItemType(
     BONE(points = -10, image = R.drawable.bone, boxImage = R.drawable.bone_box)
 }
 
+data class Vector2(val x: Float, val y: Float)
+
+fun Vector2.add(other: Vector2) = Vector2(x + other.x, y + other.y)
+fun Vector2.scale(factor: Float) = Vector2(x * factor, y * factor)
+
 data class FallingItem(
     val id: Long,
     val type: ItemType,
-    val x: Float,
-    val y: Float
+    var position: Vector2
 )
 
 data class GameState(
     val playerName: String = "",
+    val playerPosition: Vector2 = Vector2(110f, 800f),
+    val playerVelocity: Vector2 = Vector2(0f, 0f),
     val hp: Int = 3,
     val score: Int = 0,
     val remainingSeconds: Float = 30f,

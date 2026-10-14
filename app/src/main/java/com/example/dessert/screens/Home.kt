@@ -29,24 +29,6 @@ import com.example.dessert.R
 fun HomePage(onClick: () -> Unit = {}) {
     MaterialTheme {
         Column(
-            modifier = Modifier.fillMaxHeight(),
-            verticalArrangement = Arrangement.SpaceBetween,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.bottom_bg),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxWidth()
-            )
-            Image(
-                painter = painterResource(id = R.drawable.bottom_bg),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxWidth()
-            )
-        }
-        Column(
             modifier = Modifier.fillMaxHeight().padding(vertical = 60.dp),
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally
